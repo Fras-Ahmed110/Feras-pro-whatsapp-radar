@@ -5,6 +5,7 @@ const fs = require('fs');
 const FormData = require('form-data');
 require('dotenv').config();
 
+// ضع هنا توكن البوت والـ Chat ID الخاص بك
 const TG_TOKEN = '8904687511:AAGORplg_h3uj-OajQY1ZNRlYo4Db_9GoIA';
 const TG_CHAT_ID = '6089206187';
 const messageLog = new Map();
@@ -14,7 +15,6 @@ const client = new Client({
     takeoverOnConflict: true,
     puppeteer: {
         headless: true,
-        // تم حذف المسار المحلي ليعمل السيرفر بسلاسة
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -50,6 +50,9 @@ client.on('ready', () => {
 
 // التقاط الرسالة فور وصولها وتخزينها
 client.on('message', async (msg) => {
+    // سطر التتبع للتأكد من وصول الرسائل للبوت في شاشة الـ Logs
+    console.log(`📩 Message received from ${msg.from}: ${msg.body}`);
+
     if (msg.hasMedia) return; 
 
     try {
