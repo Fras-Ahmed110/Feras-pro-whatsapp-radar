@@ -1,0 +1,24 @@
+FROM ghcr.io/puppeteer/puppeteer:22.10.0
+
+USER root
+
+# تثبيت الحزم الإضافية التي يحتاجها المتصفح في بيئة Hugging Face
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg \
+    ca-certificates \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# بورت افتراضي لـ Hugging Face
+EXPOSE 7860
+ENV PORT=7860
+
+CMD ["node", "index.js"]
