@@ -14,7 +14,7 @@ const client = new Client({
     takeoverOnConflict: true,
     puppeteer: {
         headless: true,
-        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 
+        // تم حذف المسار المحلي ليعمل السيرفر بسلاسة
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -54,7 +54,6 @@ client.on('message', async (msg) => {
 
     try {
         const contact = await msg.getContact();
-        // التعديل هنا: نأخذ الاسم المسجل بالهاتف أولاً، وإذا لم يوجد نأخذ الاسم المستعار
         const senderName = contact.name || contact.pushname || "Unknown";
 
         messageLog.set(msg.id.id, {
